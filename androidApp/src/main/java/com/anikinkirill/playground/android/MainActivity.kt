@@ -8,16 +8,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.anikinkirill.playground.Greeting
+import com.anikinkirill.playground.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = MaterialTheme.colors.background
-            ) {
-                GreetingView(Greeting().greet())
+            AppTheme {
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    GreetingView(Greeting().greet())
+                }
             }
         }
     }
