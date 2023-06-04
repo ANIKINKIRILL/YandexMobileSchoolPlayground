@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.anikinkirill.playground.Greeting
+import com.anikinkirill.playground.MainView
 import com.anikinkirill.playground.theme.AppTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    GreetingView(Greeting().greet())
+                    MainView(activity = this)
                 }
             }
         }
