@@ -12,6 +12,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.material.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import com.adeo.kviewmodel.compose.observeAsState
@@ -24,6 +25,9 @@ fun UserListScreen() {
     StoredViewModel(factory = { UsersListViewModel() }) { viewModel ->
         val viewState = viewModel.viewStates().observeAsState()
         val viewAction = viewModel.viewActions().observeAsState()
+        LaunchedEffect(Unit) {
+            viewModel.obtainEvent(viewEvent = UsersListEvent.LoadUsers)
+        }
         viewAction.value?.let { action ->
             when (action) {
                 is UsersListAction.NavigateToUserPostsScreen -> {
