@@ -46,7 +46,9 @@ fun UserListScreen() {
             }
         ) {
             when (val state = viewState.value) {
-                is UsersListViewState.Data -> DataState(state.users)
+                is UsersListViewState.Data -> DataState(state.users) { event ->
+                    viewModel.obtainEvent(viewEvent = event)
+                }
                 is UsersListViewState.Error -> ErrorState(state.errorMessage)
                 is UsersListViewState.Idle -> IdleState()
                 is UsersListViewState.Loading -> LoadingState()
@@ -56,7 +58,10 @@ fun UserListScreen() {
 }
 
 @Composable
-private fun DataState(users: List<UserViewObject>) {
+private fun DataState(
+    users: List<UserViewObject>,
+    event: (UsersListEvent) -> Unit,
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -73,7 +78,11 @@ private fun DataState(users: List<UserViewObject>) {
             ) {
                 Text(
                     text = user.name,
-                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+                    modifier = Modifier
+                        .clickable {
+                            event.invoke(UsersListEvent.UserClick(id = user.id))
+                        }
+                        .padding(top = 10.dp, bottom = 10.dp),
                     textAlign = TextAlign.Center
                 )
             }

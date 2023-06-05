@@ -4,7 +4,7 @@ sealed class UsersListEvent {
     object LoadUsers : UsersListEvent()
 
     data class UserClick(
-        val name: String,
+        val id: Int,
     ) : UsersListEvent()
 
     object ActionInvoked : UsersListEvent()
@@ -12,7 +12,7 @@ sealed class UsersListEvent {
 
 sealed class UsersListAction {
     data class NavigateToUserPostsScreen(
-        val name: String,
+        val id: Int,
     ) : UsersListAction()
 }
 

@@ -16,7 +16,7 @@ class UsersListViewModel : BaseSharedViewModel<UsersListViewState, UsersListActi
         when (viewEvent) {
             is UsersListEvent.ActionInvoked -> viewAction = null
             is UsersListEvent.LoadUsers -> loadUsers()
-            is UsersListEvent.UserClick -> onUserClick(viewEvent.name)
+            is UsersListEvent.UserClick -> onUserClick(viewEvent.id)
         }
     }
 
@@ -41,8 +41,8 @@ class UsersListViewModel : BaseSharedViewModel<UsersListViewState, UsersListActi
         }
     }
 
-    private fun onUserClick(name: String) {
-        // TODO
+    private fun onUserClick(userId: Int) {
+        viewAction = UsersListAction.NavigateToUserPostsScreen(id = userId)
     }
 
 }
