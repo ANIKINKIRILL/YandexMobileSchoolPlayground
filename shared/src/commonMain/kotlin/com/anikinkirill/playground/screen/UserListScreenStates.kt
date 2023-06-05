@@ -21,7 +21,7 @@ sealed class UsersListViewState {
 
     object Loading : UsersListViewState()
 
-    data class Data(val users: List<String>) : UsersListViewState()
+    data class Data(val users: List<UserViewObject>) : UsersListViewState()
 
     data class Error(
         val errorMessage: String

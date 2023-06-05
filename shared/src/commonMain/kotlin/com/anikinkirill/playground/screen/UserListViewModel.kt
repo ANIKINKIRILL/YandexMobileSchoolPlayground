@@ -25,7 +25,13 @@ class UsersListViewModel : BaseSharedViewModel<UsersListViewState, UsersListActi
             viewState = UsersListViewState.Loading
             viewState = try {
                 val users = getUsersListUseCase.execute()
-                UsersListViewState.Data(users = users.map { it.name })
+                val usersViewObjects = users.map { userDomain ->
+                    UserViewObject(
+                        id = userDomain.id,
+                        name = userDomain.name,
+                    )
+                }
+                UsersListViewState.Data(users = usersViewObjects)
             } catch (error: Throwable) {
                 UsersListViewState.Error(
                     errorMessage =
