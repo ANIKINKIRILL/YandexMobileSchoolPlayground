@@ -15,4 +15,10 @@ class UserRemoteDataSource(
             ktorService.client.get("$BASE_URL/users").body()
         }
     }
+
+    suspend fun getUserPosts(userId: Int): List<PostDto> {
+        return withContext(dispatcher.io) {
+            ktorService.client.get("$BASE_URL/posts?userId=$userId").body()
+        }
+    }
 }
