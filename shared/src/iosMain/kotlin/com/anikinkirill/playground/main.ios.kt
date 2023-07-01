@@ -6,10 +6,13 @@ import com.anikinkirill.playground.navigation.navigationGraph
 import com.anikinkirill.playground.theme.AppTheme
 import platform.UIKit.UIViewController
 import ru.alexgladkov.odyssey.compose.setup.OdysseyConfiguration
+import ru.alexgladkov.odyssey.compose.setup.StartScreen
 import ru.alexgladkov.odyssey.compose.setup.setNavigationContent
 
 fun MainViewController(): UIViewController = ComposeUIViewController {
-    val odysseyConfiguration = OdysseyConfiguration()
+    val odysseyConfiguration = OdysseyConfiguration(
+        startScreen = StartScreen.Custom("user_list")
+    )
 
     AppTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
