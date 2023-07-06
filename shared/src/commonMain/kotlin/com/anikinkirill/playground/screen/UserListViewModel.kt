@@ -42,7 +42,7 @@ class UsersListViewModel : BaseSharedViewModel<UsersListViewState, UsersListActi
     }
 
     private fun onUserClick(userId: Int) {
-        // TODO
+        viewAction = UsersListAction.NavigateToUserPostsScreen(id = userId)
     }
 
 }

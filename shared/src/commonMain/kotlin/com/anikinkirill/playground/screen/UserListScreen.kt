@@ -1,6 +1,7 @@
 package com.anikinkirill.playground.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -47,7 +48,9 @@ fun UserListScreen() {
             }
 
             when (val state = viewState.value) {
-                is UsersListViewState.Data -> DataState(state.users)
+                is UsersListViewState.Data -> DataState(state.users) { event ->
+                    viewModel.obtainEvent(viewEvent = event)
+                }
                 is UsersListViewState.Error -> ErrorState(state.errorMessage)
                 is UsersListViewState.Idle -> IdleState()
                 is UsersListViewState.Loading -> LoadingState()
@@ -57,7 +60,10 @@ fun UserListScreen() {
 }
 
 @Composable
-private fun DataState(users: List<UserViewObject>) {
+private fun DataState(
+    users: List<UserViewObject>,
+    event: (UsersListEvent) -> Unit
+) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -74,7 +80,11 @@ private fun DataState(users: List<UserViewObject>) {
             ) {
                 Text(
                     text = user.name,
-                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+                    modifier = Modifier
+                        .padding(top = 10.dp, bottom = 10.dp)
+                        .clickable {
+                            event.invoke(UsersListEvent.UserClick(id = user.id))
+                        },
                     textAlign = TextAlign.Center,
                 )
             }
