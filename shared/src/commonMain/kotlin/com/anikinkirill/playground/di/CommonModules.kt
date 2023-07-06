@@ -4,8 +4,10 @@ import com.anikinkirill.playground.data.KtorService
 import com.anikinkirill.playground.data.UserMapper
 import com.anikinkirill.playground.data.UserRemoteDataSource
 import com.anikinkirill.playground.data.UserRepositoryImpl
+import com.anikinkirill.playground.data.posts.PostMapper
 import com.anikinkirill.playground.domain.GetUsersListUseCase
 import com.anikinkirill.playground.domain.UserRepository
+import com.anikinkirill.playground.domain.posts.GetUserPostsByIdUseCase
 import com.anikinkirill.playground.util.Dispatcher
 import com.anikinkirill.playground.util.provideDispatcher
 import org.koin.core.module.Module
@@ -16,10 +18,15 @@ private fun dataModule() = module {
         UserMapper()
     }
 
+    factory<PostMapper> {
+        PostMapper()
+    }
+
     factory<UserRepository> {
         UserRepositoryImpl(
             userMapper = get(),
             userRemoteDataSource = get(),
+            postMapper = get(),
         )
     }
 
@@ -45,6 +52,12 @@ private fun domainModule() = module {
     factory<GetUsersListUseCase> {
         GetUsersListUseCase(
             usersRepository = get(),
+        )
+    }
+
+    factory<GetUserPostsByIdUseCase> {
+        GetUserPostsByIdUseCase(
+            userRepository = get(),
         )
     }
 }
