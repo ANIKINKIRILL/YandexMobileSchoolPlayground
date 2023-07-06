@@ -1,12 +1,16 @@
 package com.anikinkirill.playground.screen.posts
 
 import com.adeo.kviewmodel.BaseSharedViewModel
+import com.anikinkirill.playground.domain.posts.GetUserPostsByIdUseCase
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class UserPostViewModel : BaseSharedViewModel<UserPostViewState, UserPostAction, UserPostEvent>(
     initialState = UserPostViewState.Idle
 ), KoinComponent {
+
+    private val getUserPostsByIdUseCase: GetUserPostsByIdUseCase by inject()
 
     override fun obtainEvent(viewEvent: UserPostEvent) {
         when (viewEvent) {
@@ -19,8 +23,14 @@ class UserPostViewModel : BaseSharedViewModel<UserPostViewState, UserPostAction,
         viewModelScope.launch {
             viewState = UserPostViewState.Loading
             viewState = try {
-                // загрузка постов
-                UserPostViewState.Data(posts = emptyList())
+                val posts = getUserPostsByIdUseCase.execute(userId = userId)
+                val postsViewObject = posts.map { post ->
+                    UserPostViewObject(
+                        title = post.title,
+                        body = post.body,
+                    )
+                }
+                UserPostViewState.Data(posts = postsViewObject)
             } catch (error: Throwable) {
                 UserPostViewState.Error(
                     errorMessage =
