@@ -1,5 +1,6 @@
 package com.anikinkirill.playground.android
 
+import MainView
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,14 +17,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    GreetingView(Greeting().greet())
+                    MainView(activity = this)
                 }
             }
         }
     }
-}
-
-@Composable
-fun GreetingView(text: String) {
-    Text(text = text)
 }
