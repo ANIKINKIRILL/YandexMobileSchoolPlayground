@@ -1,5 +1,6 @@
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
+import com.anikinkirill.playground.navigation.navigationGraph
 import ru.alexgladkov.odyssey.compose.setup.OdysseyConfiguration
 import ru.alexgladkov.odyssey.compose.setup.StartScreen
 import ru.alexgladkov.odyssey.compose.setup.setNavigationContent
@@ -14,6 +15,6 @@ fun MainView(activity: ComponentActivity) {
     setNavigationContent(odysseyConfiguration, onApplicationFinish = {
         activity.finishAffinity()
     }) {
-        // navigationGraph()
+         navigationGraph()
     }
 }
