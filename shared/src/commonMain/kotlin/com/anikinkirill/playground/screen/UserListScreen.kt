@@ -1,19 +1,18 @@
 package com.anikinkirill.playground.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.material.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
 import com.anikinkirill.playground.MainRes
@@ -58,12 +57,27 @@ fun UserListScreen() {
 }
 
 @Composable
-private fun DataState(users: List<String>) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        this.items(items = users) { user ->
-            Text(
-                text = user,
-            )
+private fun DataState(users: List<UserViewObject>) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        itemsIndexed(items = users) { index, user ->
+            val topPadding = if (index == 0) 16.dp else 0.dp
+            val bottomPadding = if (index == users.lastIndex) 16.dp else 0.dp
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(top = topPadding, bottom = bottomPadding)
+                    .padding(horizontal = 16.dp),
+            ) {
+                Text(
+                    text = user.name,
+                    modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+                    textAlign = TextAlign.Center,
+                )
+            }
         }
     }
 }
