@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -20,9 +22,12 @@ import androidx.compose.ui.unit.sp
 import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
 import com.anikinkirill.playground.MainRes
+import ru.alexgladkov.odyssey.compose.local.LocalRootController
 
 @Composable
 fun UserPostScreen(userId: Int) {
+    val rootController = LocalRootController.current
+
     StoredViewModel(factory = { UserPostViewModel() }) { viewModel ->
         val viewState = viewModel.viewStates().observeAsState()
         val viewAction = viewModel.viewActions().observeAsState()
@@ -35,6 +40,14 @@ fun UserPostScreen(userId: Int) {
                 TopAppBar(
                     title = {
                         Text(text = MainRes.string.user_post.format(userId.toString()))
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { rootController.popBackStack() }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Back button",
+                            )
+                        }
                     }
                 )
             }
