@@ -16,10 +16,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.adeo.kviewmodel.compose.observeAsState
 import com.adeo.kviewmodel.odyssey.StoredViewModel
+import com.adeo.kviewmodel.odyssey.setupWithViewModels
 import com.anikinkirill.playground.MainRes
+import ru.alexgladkov.odyssey.compose.extensions.push
+import ru.alexgladkov.odyssey.compose.local.LocalRootController
 
 @Composable
 fun UserListScreen() {
+    val rootController = LocalRootController.current
+    rootController.setupWithViewModels()
+
     Scaffold(
         modifier = Modifier.fillMaxSize().background(color = Color.White),
         topBar = {
@@ -37,7 +43,7 @@ fun UserListScreen() {
             viewAction.value?.let { action ->
                 when (action) {
                     is UsersListAction.NavigateToUserPostsScreen -> {
-                        // TODO навигация на экран со списком постов пользователя
+                        rootController.push(screen = "user_post", params = action.id)
                         viewModel.obtainEvent(UsersListEvent.ActionInvoked)
                     }
                 }
