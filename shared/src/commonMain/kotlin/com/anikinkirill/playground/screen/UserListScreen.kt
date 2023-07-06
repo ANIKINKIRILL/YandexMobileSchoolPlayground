@@ -11,6 +11,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.material.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import com.adeo.kviewmodel.compose.observeAsState
@@ -40,6 +41,10 @@ fun UserListScreen() {
                         viewModel.obtainEvent(UsersListEvent.ActionInvoked)
                     }
                 }
+            }
+
+            LaunchedEffect(Unit) {
+                viewModel.obtainEvent(viewEvent = UsersListEvent.LoadUsers)
             }
 
             when (val state = viewState.value) {
